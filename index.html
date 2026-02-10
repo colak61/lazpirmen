@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lazpirmen • Mini Oyun</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background:linear-gradient(135deg,#141e30,#243b55);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .card{
+      width:90%;
+      max-width:420px;
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(10px);
+      border-radius:20px;
+      padding:24px;
+      box-shadow:0 20px 40px rgba(0,0,0,.5);
+    }
+
+    h1{text-align:center;margin-bottom:14px}
+    p{text-align:center;opacity:.85;margin-bottom:18px}
+
+    input,select,button{
+      width:100%;
+      padding:12px;
+      margin-bottom:12px;
+      border-radius:12px;
+      border:none;
+      outline:none;
+      font-size:1rem;
+    }
+
+    button{
+      background:linear-gradient(135deg,#ff4b2b,#ff8a5b);
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .hidden{display:none}
+    .number{font-size:3rem;margin:18px 0}
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div id="login">
+    <h1>🎮 Lazpirmen</h1>
+    <p>Kullanıcı adını gir ve oyuna başla</p>
+
+    <input id="username" placeholder="Kullanıcı adı">
+    <select id="gender">
+      <option value="">Cinsiyet seç</option>
+      <option>Erkek</option>
+      <option>Kız</option>
+    </select>
+
+    <button onclick="startGame()">Oyuna Gir</button>
+  </div>
+
+  <div id="game" class="hidden">
+    <h1 id="welcome"></h1>
+    <p>1 ile 10 arasında sayı tuttum</p>
+
+    <div class="number" id="result">❓</div>
+
+    <input id="guess" type="number" min="1" max="10" placeholder="Tahminin">
+    <button onclick="checkGuess()">Tahmin Et</button>
+
+    <p id="msg"></p>
+  </div>
+
+</div>
+
+<script>
+  let secret = Math.floor(Math.random()*10)+1;
+
+  function startGame(){
+    const u = username.value.trim();
+    const g = gender.value;
+
+    if(!u || !g){
+      alert("Bilgileri doldur");
+      return;
+    }
+
+    login.classList.add("hidden");
+    game.classList.remove("hidden");
+    welcome.innerText = `Hoş geldin ${u} 👋 | Lazpirmen`;
+  }
+
+  function checkGuess(){
+    const val = Number(guess.value);
+    if(!val) return;
+
+    if(val === secret){
+      result.innerText = secret;
+      msg.innerText = "🎉 Doğru bildin! Sayfayı yenile.";
+    }else if(val < secret){
+      msg.innerText = "⬆️ Daha büyük dene";
+    }else{
+      msg.innerText = "⬇️ Daha küçük dene";
+    }
+  }
+</script>
+
+</body>
+</html>
